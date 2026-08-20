@@ -121,14 +121,19 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- CABECERA HERO ---
-st.markdown("""
-<div class="hero-container">
-    <div class="badge-csic">Grupo de Trabajo del Curso<br>Python para la Ciencia Abierta: Introducción</div>
-    <div class="hero-title">🌍 CSIC ClimateWatch</div>
+logo_path = "assets/logoCSIC.jpg"
+if not os.path.exists(logo_path):
+    logo_path = "../assets/logoCSIC.jpg"
 
-    <div class="hero-subtitle">Monitor Interactivo de Cambio Climático, Sequía (SPEI) y Olas de Calor en España (1961 - 2024)</div>
-</div>
-""", unsafe_allow_html=True)
+if os.path.exists(logo_path):
+    col_logo, col_text = st.columns([1, 5])
+    with col_logo:
+        st.image(logo_path, width=120)
+    with col_text:
+        st.markdown('<div class="badge-csic">Grupo de Trabajo del Curso<br>Python para la Ciencia Abierta: Introducción</div><div class="hero-title">🌍 CSIC ClimateWatch</div><div class="hero-subtitle">Monitor Interactivo de Cambio Climático, Sequía (SPEI) y Olas de Calor en España (1961 - 2024)</div>', unsafe_allow_html=True)
+else:
+    st.markdown('<div class="hero-container"><div class="badge-csic">Grupo de Trabajo del Curso<br>Python para la Ciencia Abierta: Introducción</div><div class="hero-title">🌍 CSIC ClimateWatch</div><div class="hero-subtitle">Monitor Interactivo de Cambio Climático, Sequía (SPEI) y Olas de Calor en España (1961 - 2024)</div></div>', unsafe_allow_html=True)
+
 
 # --- CARGA DE DATOS ---
 @st.cache_data
