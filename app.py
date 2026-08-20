@@ -1,7 +1,6 @@
 import os
 import streamlit as st
 import pandas as pd
-
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -9,7 +8,7 @@ from src.csic_climate.data_loader import load_climate_data, filter_by_region_and
 from src.csic_climate.metrics import calculate_climate_summary, calculate_decadal_trend
 
 # ==============================================================================
-# CONFIGURACIÓN DE PÁGINA Y TEMA STREAMLIT
+# CONFIGURACIÓN DE PÁGINA Y TEMA OSCURO
 # ==============================================================================
 st.set_page_config(
     page_title="CSIC ClimateWatch - Monitor de Cambio Climático y Sequía",
@@ -18,126 +17,166 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Estilos CSS Avanzados (Diseño Moderno, Neomorfismo y Modos Contrastados)
+# Estilos CSS Personalizados para Modo Oscuro Total
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
     
-    html, body, [class*="css"] {
+    /* Global App Background */
+    .stApp {
+        background-color: #0F172A !important;
+        color: #F8FAFC !important;
         font-family: 'Inter', sans-serif;
     }
     
-    /* Banner Principal con Gradiente CSIC */
-    .hero-container {
-        background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 45%, #047857 100%);
-        padding: 30px;
-        border-radius: 18px;
-        color: white;
-        margin-bottom: 25px;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    /* Sidebar Styling */
+    [data-testid="stSidebar"] {
+        background-color: #1E293B !important;
+        border-right: 1px solid #334155 !important;
     }
     
-    .hero-title {
-        font-size: 2.5rem;
+    /* Header Box */
+    .header-box {
+        background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+        border: 1px solid #334155;
+        border-left: 5px solid #10B981;
+        padding: 24px 28px;
+        border-radius: 14px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+    
+    .badge-tag {
+        background-color: rgba(16, 185, 129, 0.15);
+        color: #34D399;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        border: 1px solid rgba(52, 211, 153, 0.3);
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+    
+    .header-title {
+        font-size: 2.2rem;
         font-weight: 800;
+        color: #F8FAFC;
         margin: 0;
         letter-spacing: -0.5px;
-        background: linear-gradient(90deg, #FFFFFF, #93C5FD);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
     }
     
-    .hero-subtitle {
-        font-size: 1.1rem;
-        color: #E2E8F0;
-        margin-top: 8px;
-        font-weight: 300;
+    .header-subtitle {
+        font-size: 0.98rem;
+        color: #94A3B8;
+        margin-top: 6px;
+        font-weight: 400;
     }
     
-    .badge-csic {
-        background-color: rgba(255, 255, 255, 0.15);
-        color: #6EE7B7;
-        padding: 5px 14px;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        border: 1px solid rgba(110, 231, 183, 0.3);
-        display: inline-block;
-        margin-bottom: 12px;
-    }
-    
-    /* Tarjetas de Métricas Personalizadas */
-    .metric-card {
-        background: #1E293B;
+    /* KPI Metric Cards */
+    .kpi-card {
+        background-color: #1E293B;
         border: 1px solid #334155;
-        border-radius: 14px;
-        padding: 20px;
+        border-radius: 12px;
+        padding: 18px 14px;
         text-align: center;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease, border-color 0.2s ease;
     }
     
-    .metric-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-        border-color: #3B82F6;
+    .kpi-card:hover {
+        transform: translateY(-2px);
+        border-color: #10B981;
     }
     
-    .metric-value {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #F8FAFC;
-        margin: 8px 0;
-    }
-    
-    .metric-label {
-        font-size: 0.85rem;
+    .kpi-title {
+        font-size: 0.8rem;
         color: #94A3B8;
         text-transform: uppercase;
-        letter-spacing: 0.8px;
-        font-weight: 600;
+        font-weight: 700;
+        letter-spacing: 0.5px;
     }
     
-    .metric-delta-warning {
-        color: #F87171;
-        font-weight: 600;
-        font-size: 0.9rem;
+    .kpi-number {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #F8FAFC;
+        margin: 6px 0;
     }
     
-    .metric-delta-good {
-        color: #34D399;
-        font-weight: 600;
-        font-size: 0.9rem;
+    .kpi-desc {
+        font-size: 0.78rem;
+        color: #64748B;
     }
     
-    /* Tarjeta de Información de Grupos */
+    /* Group Cards in Tab 4 */
     .group-box {
-        background: #1E293B;
+        background-color: #1E293B;
         border-left: 4px solid #3B82F6;
-        padding: 16px;
-        border-radius: 8px;
-        margin-bottom: 12px;
+        padding: 18px 22px;
+        border-radius: 10px;
+        margin-bottom: 14px;
         color: #E2E8F0;
+        border-top: 1px solid #334155;
+        border-right: 1px solid #334155;
+        border-bottom: 1px solid #334155;
+    }
+    
+    /* Streamlit Native Elements Customization */
+    .stSelectbox label, .stSlider label {
+        color: #E2E8F0 !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Tabs Customization */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        background-color: #1E293B !important;
+        border-radius: 8px 8px 0 0 !important;
+        color: #94A3B8 !important;
+        padding: 10px 18px !important;
+        border: 1px solid #334155 !important;
+        border-bottom: none !important;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background-color: #10B981 !important;
+        color: #FFFFFF !important;
+        font-weight: 700 !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- CABECERA HERO ---
+# --- CABECERA HERO CON SOPORTE DE LOGO ---
 logo_path = "assets/logoCSIC.jpg"
 if not os.path.exists(logo_path):
     logo_path = "../assets/logoCSIC.jpg"
 
 if os.path.exists(logo_path):
-    col_logo, col_text = st.columns([1, 5])
+    col_logo, col_header = st.columns([1, 5])
     with col_logo:
-        st.image(logo_path, width=120)
-    with col_text:
-        st.markdown('<div class="badge-csic">Grupo de Trabajo del Curso<br>Python para la Ciencia Abierta: Introducción</div><div class="hero-title">🌍 CSIC ClimateWatch</div><div class="hero-subtitle">Monitor Interactivo de Cambio Climático, Sequía (SPEI) y Olas de Calor en España (1961 - 2024)</div>', unsafe_allow_html=True)
+        st.image(logo_path, width=130)
+    with col_header:
+        st.markdown("""
+        <div class="header-box">
+            <div class="badge-tag">Grupo de Trabajo del Curso • Python para la Ciencia Abierta: Introducción</div>
+            <div class="header-title">🌍 CSIC ClimateWatch</div>
+            <div class="header-subtitle">Monitor Interactivo de Cambio Climático, Sequía (SPEI) y Olas de Calor en España (1961 - 2024)</div>
+        </div>
+        """, unsafe_allow_html=True)
 else:
-    st.markdown('<div class="hero-container"><div class="badge-csic">Grupo de Trabajo del Curso<br>Python para la Ciencia Abierta: Introducción</div><div class="hero-title">🌍 CSIC ClimateWatch</div><div class="hero-subtitle">Monitor Interactivo de Cambio Climático, Sequía (SPEI) y Olas de Calor en España (1961 - 2024)</div></div>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="header-box">
+        <div class="badge-tag">Grupo de Trabajo del Curso • Python para la Ciencia Abierta: Introducción</div>
+        <div class="header-title">🌍 CSIC ClimateWatch</div>
+        <div class="header-subtitle">Monitor Interactivo de Cambio Climático, Sequía (SPEI) y Olas de Calor en España (1961 - 2024)</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-
-# --- CARGA DE DATOS ---
+# --- CARGA DE DATOS CLIMÁTICOS ---
 @st.cache_data
 def load_data():
     return load_climate_data()
@@ -145,13 +184,12 @@ def load_data():
 try:
     df_raw = load_data()
 except Exception as e:
-    st.error(f"❌ Error al cargar los datos climáticos: {e}")
+    st.error(f"❌ Error al cargar el dataset climático: {e}")
     st.stop()
 
 # --- BARRA LATERAL CON FILTROS ---
-st.sidebar.markdown("### 🎛️ Filtros de Control")
+st.sidebar.markdown("## 🎛️ Filtros de Control")
 
-# Obtener lista completa de Comunidades Autónomas ordenadas
 regiones_disponibles = sorted(df_raw["comunidad_autonoma"].unique().tolist())
 regiones_opciones = ["Todas"] + regiones_disponibles
 
@@ -161,7 +199,6 @@ region_sel = st.sidebar.selectbox(
     index=0
 )
 
-# Slider de años
 min_year = int(df_raw["anio"].min())
 max_year = int(df_raw["anio"].max())
 
@@ -173,10 +210,9 @@ year_range = st.sidebar.slider(
     step=1
 )
 
-# Información en Barra Lateral
 st.sidebar.markdown("---")
-st.sidebar.markdown(f"**📊 Registros Filtrados:** {len(df_raw)} observaciones")
-st.sidebar.markdown(f"**🏛️ Comunidades en Base:** {len(regiones_disponibles)}")
+st.sidebar.markdown(f"**📊 Registros Activos:** {len(df_raw):,} meses")
+st.sidebar.markdown(f"**🏛️ Comunidades Autónomas:** {len(regiones_disponibles)}")
 st.sidebar.caption("Fuente: ERA5 Reanalysis / IPE-CSIC (DOI: 10.20350/digitalCSIC/8997)")
 
 # Filtrado de Datos
@@ -187,61 +223,61 @@ df_filtered = filter_by_region_and_years(
     end_year=year_range[1]
 )
 
-# --- RESUMEN DE INDICADORES (TARJETAS KPI) ---
+# --- RESUMEN DE INDICADORES (TARJETAS KPI TARJETAS OSCURAS) ---
 summary = calculate_climate_summary(df_filtered)
 
 c1, c2, c3, c4, c5 = st.columns(5)
 
 with c1:
     st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">🌡️ Temp. Media</div>
-        <div class="metric-value">{summary['temp_media']} °C</div>
-        <div style="color: #94A3B8; font-size: 0.8rem;">Promedio Observado</div>
+    <div class="kpi-card">
+        <div class="kpi-title">🌡️ Temp. Media</div>
+        <div class="kpi-number">{summary['temp_media']} °C</div>
+        <div class="kpi-desc">Promedio Observado</div>
     </div>
     """, unsafe_allow_html=True)
 
 with c2:
-    delta_class = "metric-delta-warning" if summary['anomalia_media'] > 0 else "metric-delta-good"
-    delta_icon = "🔥 +" if summary['anomalia_media'] > 0 else "❄️ "
+    color_anom = "#EF4444" if summary['anomalia_media'] > 0 else "#10B981"
+    signo_anom = "+" if summary['anomalia_media'] > 0 else ""
     st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">☀️ Anomalía Térmica</div>
-        <div class="metric-value" style="color: {'#F87171' if summary['anomalia_media'] > 0 else '#6EE7B7'};">{summary['anomalia_media']} °C</div>
-        <div class="{delta_class}">{delta_icon}{summary['anomalia_media']} °C vs 1961-1990</div>
+    <div class="kpi-card">
+        <div class="kpi-title">☀️ Anomalía Térmica</div>
+        <div class="kpi-number" style="color: {color_anom};">{signo_anom}{summary['anomalia_media']} °C</div>
+        <div class="kpi-desc">vs Línea Base (1961-1990)</div>
     </div>
     """, unsafe_allow_html=True)
 
 with c3:
     st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">🌧️ Precipitación Total</div>
-        <div class="metric-value" style="color: #60A5FA;">{summary['precipitacion_total']:,} <span style="font-size: 1rem;">mm</span></div>
-        <div style="color: #94A3B8; font-size: 0.8rem;">Acumulado Periodo</div>
+    <div class="kpi-card">
+        <div class="kpi-title">🌧️ Precipitación Total</div>
+        <div class="kpi-number" style="color: #60A5FA;">{summary['precipitacion_total']:,} <span style="font-size: 1rem;">mm</span></div>
+        <div class="kpi-desc">Acumulado Periodo</div>
     </div>
     """, unsafe_allow_html=True)
 
 with c4:
     st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">🏜️ Sequía Severa</div>
-        <div class="metric-value" style="color: #F59E0B;">{summary['meses_sequia_severa']}</div>
-        <div style="color: #94A3B8; font-size: 0.8rem;">Meses con SPEI < -1.5</div>
+    <div class="kpi-card">
+        <div class="kpi-title">🏜️ Sequía Severa</div>
+        <div class="kpi-number" style="color: #F59E0B;">{summary['meses_sequia_severa']}</div>
+        <div class="kpi-desc">Meses SPEI < -1.5</div>
     </div>
     """, unsafe_allow_html=True)
 
 with c5:
     st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">🔥 Días en Ola Calor</div>
-        <div class="metric-value" style="color: #EF4444;">{summary['dias_totales_ola_calor']}</div>
-        <div style="color: #94A3B8; font-size: 0.8rem;">Días T.Máx > 32°C</div>
+    <div class="kpi-card">
+        <div class="kpi-title">🔥 Días en Ola Calor</div>
+        <div class="kpi-number" style="color: #F87171;">{summary['dias_totales_ola_calor']}</div>
+        <div class="kpi-desc">Días T.Máx > 32°C</div>
     </div>
     """, unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# --- PESTAÑAS DE NAVEGACIÓN ---
+# --- PESTAÑAS PRINCIPALES ---
 tab1, tab2, tab3, tab4 = st.tabs([
     "📈 Series Temporales y Gráficos", 
     "🗺️ Comparativa Regional", 
@@ -253,7 +289,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
 plt.style.use('dark_background')
 
 with tab1:
-    st.subheader(f"📊 Evolución Climatológica - {region_sel} ({year_range[0]} - {year_range[1]})")
+    st.markdown(f"### 📈 Evolución Climatológica en {region_sel} ({year_range[0]} - {year_range[1]})")
     
     # Agrupación Anual
     df_annual = df_filtered.groupby("anio").agg({
@@ -267,40 +303,37 @@ with tab1:
     col_chart1, col_chart2 = st.columns(2)
     
     with col_chart1:
-        # Gráfico 1: Anomalía de Temperatura
         fig1, ax1 = plt.subplots(figsize=(8, 4.5))
         fig1.patch.set_facecolor('#0F172A')
         ax1.set_facecolor('#1E293B')
         
         colors = ['#EF4444' if x > 0 else '#3B82F6' for x in df_annual["anomalia_termica_c"]]
         ax1.bar(df_annual["anio"], df_annual["anomalia_termica_c"], color=colors, alpha=0.9, width=0.8)
-        ax1.axhline(0, color='#94A3B8', linestyle='--', linewidth=1)
+        ax1.axhline(0, color='#64748B', linestyle='--', linewidth=1)
         ax1.set_ylabel("Anomalía Térmica (°C)", color='#E2E8F0', fontsize=10)
-        ax1.set_title("Anomalía Térmica Anual (°C vs Línea Base 1961-1990)", color='white', fontsize=12, fontweight='bold')
-        ax1.grid(True, linestyle=":", alpha=0.3, color='#475569')
+        ax1.set_title("Anomalía Anual de Temperatura (°C vs 1961-1990)", color='white', fontsize=12, fontweight='bold')
+        ax1.grid(True, linestyle=":", alpha=0.25, color='#475569')
         ax1.tick_params(colors='#94A3B8')
         st.pyplot(fig1)
 
     with col_chart2:
-        # Gráfico 2: Evolución de Sequía (SPEI)
         fig2, ax2 = plt.subplots(figsize=(8, 4.5))
         fig2.patch.set_facecolor('#0F172A')
         ax2.set_facecolor('#1E293B')
         
         ax2.plot(df_annual["anio"], df_annual["indice_spei_sequia"], color='#10B981', linewidth=2.2, label="Índice SPEI")
         ax2.axhline(-1.5, color='#EF4444', linestyle='--', linewidth=1.5, label="Umbral Sequía Severa (-1.5)")
-        ax2.axhline(0, color='#94A3B8', linestyle=':', linewidth=0.8)
-        ax2.fill_between(df_annual["anio"], df_annual["indice_spei_sequia"], -1.5, where=(df_annual["indice_spei_sequia"] <= -1.5), color='#EF4444', alpha=0.3)
+        ax2.axhline(0, color='#64748B', linestyle=':', linewidth=0.8)
+        ax2.fill_between(df_annual["anio"], df_annual["indice_spei_sequia"], -1.5, where=(df_annual["indice_spei_sequia"] <= -1.5), color='#EF4444', alpha=0.35)
         ax2.set_ylabel("Índice SPEI", color='#E2E8F0', fontsize=10)
         ax2.set_title("Índice Estandarizado de Sequía (SPEI - CSIC)", color='white', fontsize=12, fontweight='bold')
         ax2.legend(loc="lower left", facecolor='#1E293B', edgecolor='#334155')
-        ax2.grid(True, linestyle=":", alpha=0.3, color='#475569')
+        ax2.grid(True, linestyle=":", alpha=0.25, color='#475569')
         ax2.tick_params(colors='#94A3B8')
         st.pyplot(fig2)
 
-    # Gráfico Decadal
     st.markdown("---")
-    st.subheader("📅 Tendencia de Calentamiento por Décadas")
+    st.markdown("### 📅 Tendencia de Calentamiento Promedio por Década")
     df_decadal = calculate_decadal_trend(df_filtered)
     
     fig_dec, ax_dec = plt.subplots(figsize=(10, 3.5))
@@ -319,14 +352,13 @@ with tab1:
     ax_dec.set_xlabel("Década", color='#E2E8F0')
     ax_dec.set_ylabel("Anomalía Media (°C)", color='#E2E8F0')
     ax_dec.set_title("Incremento de Temperatura Promedio por Década (°C)", color='white', fontweight='bold')
-    ax_dec.grid(True, linestyle=":", alpha=0.3, color='#475569')
+    ax_dec.grid(True, linestyle=":", alpha=0.25, color='#475569')
     ax_dec.tick_params(colors='#94A3B8')
     st.pyplot(fig_dec)
 
 with tab2:
-    st.subheader("🗺️ Ranking y Comparativa entre Comunidades Autónomas")
+    st.markdown("### 🗺️ Ranking y Comparativa entre Comunidades Autónomas")
     
-    # Ranking Regional
     df_region_summary = df_raw[(df_raw["anio"] >= year_range[0]) & (df_raw["anio"] <= year_range[1])].groupby("comunidad_autonoma").agg({
         "anomalia_termica_c": "mean",
         "temperatura_media_c": "mean",
@@ -338,7 +370,7 @@ with tab2:
     col_rank1, col_rank2 = st.columns(2)
     
     with col_rank1:
-        st.markdown("##### 🔥 Top 10 Comunidades con Mayor Anomalía Térmica (°C)")
+        st.markdown("##### 🔥 Top Comunidades con Mayor Anomalía Térmica (°C)")
         df_sorted_temp = df_region_summary.sort_values(by="anomalia_termica_c", ascending=False).head(10)
         
         fig_rank1, ax_r1 = plt.subplots(figsize=(7, 4.5))
@@ -346,14 +378,14 @@ with tab2:
         ax_r1.set_facecolor('#1E293B')
         
         sns.barplot(data=df_sorted_temp, y="comunidad_autonoma", x="anomalia_termica_c", hue="comunidad_autonoma", legend=False, palette="YlOrRd_r", ax=ax_r1)
-        ax_r1.set_xlabel("Anomalía Térmica (°C)")
+        ax_r1.set_xlabel("Anomalía Térmica (°C)", color='#E2E8F0')
         ax_r1.set_ylabel("")
-        ax_r1.grid(True, linestyle=":", alpha=0.3, color='#475569')
+        ax_r1.grid(True, linestyle=":", alpha=0.25, color='#475569')
         ax_r1.tick_params(colors='#94A3B8')
         st.pyplot(fig_rank1)
 
     with col_rank2:
-        st.markdown("##### 🏜️ Top 10 Comunidades con Mayor Impacto de Olas de Calor (Días Acumulados)")
+        st.markdown("##### 🏜️ Top Comunidades con Mayor Impacto de Olas de Calor (Días Acumulados)")
         df_sorted_heat = df_region_summary.sort_values(by="dias_ola_calor", ascending=False).head(10)
         
         fig_rank2, ax_r2 = plt.subplots(figsize=(7, 4.5))
@@ -361,16 +393,15 @@ with tab2:
         ax_r2.set_facecolor('#1E293B')
         
         sns.barplot(data=df_sorted_heat, y="comunidad_autonoma", x="dias_ola_calor", hue="comunidad_autonoma", legend=False, palette="Oranges_r", ax=ax_r2)
-        ax_r2.set_xlabel("Días Acumulados en Ola de Calor")
+        ax_r2.set_xlabel("Días Acumulados en Ola de Calor", color='#E2E8F0')
         ax_r2.set_ylabel("")
-        ax_r2.grid(True, linestyle=":", alpha=0.3, color='#475569')
+        ax_r2.grid(True, linestyle=":", alpha=0.25, color='#475569')
         ax_r2.tick_params(colors='#94A3B8')
         st.pyplot(fig_rank2)
 
 with tab3:
-    st.subheader("🧮 Explorador Interactivo del Dataset (Pandas)")
+    st.markdown("### 🧮 Explorador Interactivo del Dataset (Pandas)")
     st.dataframe(df_filtered, width="stretch")
-
     
     csv_bytes = df_filtered.to_csv(index=False).encode('utf-8')
     st.download_button(
@@ -381,7 +412,7 @@ with tab3:
     )
 
 with tab4:
-    st.subheader("👥 Organización del Trabajo en Grupos de GitHub")
+    st.markdown("### 👥 Organización del Trabajo en Grupos de GitHub")
     
     st.markdown("""
     <div class="group-box">
