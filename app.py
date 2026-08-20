@@ -124,7 +124,8 @@ with tab1:
     df_decadal = calculate_decadal_trend(df_filtered)
     
     fig_dec, ax_dec = plt.subplots(figsize=(8, 3.5))
-    sns.barplot(data=df_decadal, x="decada", y="anomalia_termica_c", palette="Reds", ax=ax_dec)
+    sns.barplot(data=df_decadal, x="decada", y="anomalia_termica_c", hue="decada", legend=False, palette="Reds", ax=ax_dec)
+
     ax_dec.set_xlabel("Década")
     ax_dec.set_ylabel("Anomalía Media (°C)")
     ax_dec.set_title("Anomalía Térmica Promedio por Década")
