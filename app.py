@@ -123,8 +123,9 @@ st.markdown("""
 # --- CABECERA HERO ---
 st.markdown("""
 <div class="hero-container">
-    <div class="badge-csic">🏛️ CSIC • Instituto Pirenaico de Ecología (IPE) & AEMET</div>
+    <div class="badge-csic">Grupo de Trabajo del Curso<br>Python para la Ciencia Abierta: Introducción</div>
     <div class="hero-title">🌍 CSIC ClimateWatch</div>
+
     <div class="hero-subtitle">Monitor Interactivo de Cambio Climático, Sequía (SPEI) y Olas de Calor en España (1961 - 2024)</div>
 </div>
 """, unsafe_allow_html=True)
