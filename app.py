@@ -361,7 +361,8 @@ with tab2:
 
 with tab3:
     st.subheader("🧮 Explorador Interactivo del Dataset (Pandas)")
-    st.dataframe(df_filtered, use_container_width=True)
+    st.dataframe(df_filtered, width="stretch")
+
     
     csv_bytes = df_filtered.to_csv(index=False).encode('utf-8')
     st.download_button(
