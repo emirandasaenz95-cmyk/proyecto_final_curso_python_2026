@@ -78,10 +78,10 @@ Este proyecto está bajo la Licencia MIT. Para citar el uso de los datos o el pa
 
 ```bibtex
 @software{csic_climatewatch_2026,
-  author       = {Liñán Cembrano, Gustavo y Alumnado del CSIC},
+  author       = {Liñán Cembrano, Gustavo y Alumnado del Curso Python para la Ciencia Abierta 2ª Edición},
   title        = {CSIC-ClimateWatch: Cuadro de Mando de Cambio Climático y Sequía en España},
   year         = {2026},
   publisher    = {Digital.CSIC / GitHub},
-  url          = {https://github.com/csic/CSIC-ClimateWatch}
+  url          = {https://github.com/guslicem/CSIC-ClimateWatch}
 }
 ```

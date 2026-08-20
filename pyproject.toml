@@ -8,10 +8,10 @@ version = "0.1.0"
 description = "Cuadro de Mando de Cambio Climático y Sequía en España (IPE-CSIC / AEMET)"
 readme = "README.md"
 authors = [
-    { name = "Gustavo Liñán Cembrano", email = "linan@csic.es" }
+    { name = "Gustavo Liñán Cembrano", email = "gustavo.linan@csic.es" }
 ]
 license = { text = "MIT" }
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 
 dependencies = [
     "streamlit>=1.30.0",
