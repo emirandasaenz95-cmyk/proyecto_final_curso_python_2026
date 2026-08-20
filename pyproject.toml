@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "csic-climatewatch"
+version = "0.1.0"
+description = "Cuadro de Mando de Cambio Climático y Sequía en España (IPE-CSIC / AEMET)"
+readme = "README.md"
+authors = [
+    { name = "Gustavo Liñán Cembrano", email = "linan@csic.es" }
+]
+license = { text = "MIT" }
+requires-python = ">=3.9"
+
+dependencies = [
+    "streamlit>=1.30.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "matplotlib>=3.5.0",
+    "seaborn>=0.12.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "copier>=9.0.0",
+    "hatch>=1.14.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/csic_climate"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

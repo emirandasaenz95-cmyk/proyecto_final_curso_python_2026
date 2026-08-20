@@ -1,0 +1,19 @@
+# Entorno Virtual local de PROYECTO_FINAL
+venv/
+.env
+# Caché de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Caché de Pytest
+.pytest_cache/
+
+# Archivos del Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# Configuración de IDEs locales
+.vscode/
+.idea/
