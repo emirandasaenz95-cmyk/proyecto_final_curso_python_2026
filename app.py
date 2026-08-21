@@ -279,12 +279,14 @@ with c5:
 st.markdown("<br>", unsafe_allow_html=True)
 
 # --- PESTAÑAS PRINCIPALES ---
-tab1, tab2, tab3, tab4 = st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "📈 Series Temporales y Gráficos", 
     "🗺️ Comparativa Regional", 
     "🧮 Explorador Pandas", 
-    "👥 Trabajo en Grupos (GitHub)"
+    "👥 Trabajo en Grupos (GitHub)",
+    "ℹ️ INFO & Metodología"
 ])
+
 
 # Estilo Oscuro Elegante para Matplotlib
 plt.style.use('dark_background')
@@ -436,3 +438,47 @@ with tab4:
         <p><strong>Tarea:</strong> Crear los tests unitarios con <code>pytest</code> para validar las nuevas funciones y asegurar que la automatización pase limpia en las Pull Requests.</p>
     </div>
     """, unsafe_allow_html=True)
+
+with tab5:
+    st.markdown("### ℹ️ Información General, Metodología y Fuentes de Datos")
+    
+    col_info1, col_info2 = st.columns(2)
+    
+    with col_info1:
+        st.markdown("""
+        <div class="group-box" style="border-left-color: #10B981;">
+            <h4>🎯 ¿Qué hace esta Aplicación?</h4>
+            <p><strong>CSIC ClimateWatch</strong> es un cuadro de mando científico e interactivo desarrollado como proyecto integrador del curso <em>Python para la Ciencia Abierta (CSIC)</em>. Permite auditar, visualizar y comparar la evolución de las series climáticas históricas (1961 - 2024), centrándose en el incremento de temperaturas, episodios de olas de calor e índices de sequía en las 17 Comunidades Autónomas de España.</p>
+        </div>
+        
+        <div class="group-box" style="border-left-color: #3B82F6;">
+            <h4>🌐 Recolección de Datos (Open Science)</h4>
+            <ul>
+                <li><strong>Fuente Meteorológica:</strong> Modelo de reanálisis <strong>ERA5</strong> del <em>Servicio de Cambio Climático de Copernicus (C3S / ECMWF)</em> accesible libremente a través de la API REST de Open-Meteo.</li>
+                <li><strong>Período Temporal:</strong> Series mensuales continuas desde enero de 1961 hasta diciembre de 2024 (13.056 observaciones reales).</li>
+                <li><strong>Línea Base Climática:</strong> Periodo estándar 1961-1990 utilizado como referencia normalizada internacional.</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        
+    with col_info2:
+        st.markdown("""
+        <div class="group-box" style="border-left-color: #F59E0B;">
+            <h4>🔬 Metodología de Indicadores</h4>
+            <ul>
+                <li><strong>Anomalía Térmica (°C):</strong> Desviación de la temperatura media mensual observada respecto al promedio de la línea base 1961-1990.</li>
+                <li><strong>Índice SPEI de Sequía:</strong> Formulación del <em>Standardised Precipitation-Evapotranspiration Index</em> desarrollada por investigadores del <strong>Instituto Pirenaico de Ecología (IPE-CSIC)</strong> (Vicente-Serrano et al.). Un valor de SPEI &le; -1.5 define sequía severa/extrema.</li>
+                <li><strong>Olas de Calor:</strong> Conteo acumulado de días al mes con temperaturas máximas observadas &gt; 32 °C.</li>
+            </ul>
+        </div>
+        
+        <div class="group-box" style="border-left-color: #EC4899;">
+            <h4>📜 Principios FAIR y Ciencia Abierta</h4>
+            <ul>
+                <li><strong>Encontrable (Findable):</strong> Código fuente alojado públicamente en GitHub y metadatos normalizados.</li>
+                <li><strong>Accesible (Accessible):</strong> API abierta y descarga libre del dataset completo en CSV.</li>
+                <li><strong>Reutilizable (Reusable):</strong> Licencia libre MIT e inclusión de archivo de citación <code>CITATION.cff</code>.</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
