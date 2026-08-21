@@ -7,7 +7,8 @@ def sample_climate_data():
     """Fixture que proporciona un DataFrame sintético para las pruebas unitarias."""
     data = {
         "fecha": ["1990-01-01", "1990-06-01", "2020-01-01", "2020-06-01"],
-        "anio": [1990, 1990, 2020, 2020],
+        "year": [1990, 1990, 2020, 2020],
+
         "mes": [1, 6, 1, 6],
         "comunidad_autonoma": ["Andalucía", "Andalucía", "Andalucía", "Andalucía"],
         "temperatura_media_c": [12.0, 26.0, 14.0, 28.0],

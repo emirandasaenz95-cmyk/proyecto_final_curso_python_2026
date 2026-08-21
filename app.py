@@ -199,8 +199,9 @@ region_sel = st.sidebar.selectbox(
     index=0
 )
 
-min_year = int(df_raw["anio"].min())
-max_year = int(df_raw["anio"].max())
+min_year = int(df_raw["year"].min())
+max_year = int(df_raw["year"].max())
+
 
 year_range = st.sidebar.slider(
     "📅 Rango Temporal (Años):",
@@ -295,7 +296,8 @@ with tab1:
     st.markdown(f"### 📈 Evolución Climatológica en {region_sel} ({year_range[0]} - {year_range[1]})")
     
     # Agrupación Anual
-    df_annual = df_filtered.groupby("anio").agg({
+    df_annual = df_filtered.groupby("year").agg({
+
         "temperatura_media_c": "mean",
         "anomalia_termica_c": "mean",
         "precipitacion_mm": "sum",
@@ -311,7 +313,8 @@ with tab1:
         ax1.set_facecolor('#1E293B')
         
         colors = ['#EF4444' if x > 0 else '#3B82F6' for x in df_annual["anomalia_termica_c"]]
-        ax1.bar(df_annual["anio"], df_annual["anomalia_termica_c"], color=colors, alpha=0.9, width=0.8)
+        ax1.bar(df_annual["year"], df_annual["anomalia_termica_c"], color=colors, alpha=0.9, width=0.8)
+
         ax1.axhline(0, color='#64748B', linestyle='--', linewidth=1)
         ax1.set_ylabel("Anomalía Térmica (°C)", color='#E2E8F0', fontsize=10)
         ax1.set_title("Anomalía Anual de Temperatura (°C vs 1961-1990)", color='white', fontsize=12, fontweight='bold')
@@ -324,10 +327,11 @@ with tab1:
         fig2.patch.set_facecolor('#0F172A')
         ax2.set_facecolor('#1E293B')
         
-        ax2.plot(df_annual["anio"], df_annual["indice_spei_sequia"], color='#10B981', linewidth=2.2, label="Índice SPEI")
+        ax2.plot(df_annual["year"], df_annual["indice_spei_sequia"], color='#10B981', linewidth=2.2, label="Índice SPEI")
         ax2.axhline(-1.5, color='#EF4444', linestyle='--', linewidth=1.5, label="Umbral Sequía Severa (-1.5)")
         ax2.axhline(0, color='#64748B', linestyle=':', linewidth=0.8)
-        ax2.fill_between(df_annual["anio"], df_annual["indice_spei_sequia"], -1.5, where=(df_annual["indice_spei_sequia"] <= -1.5), color='#EF4444', alpha=0.35)
+        ax2.fill_between(df_annual["year"], df_annual["indice_spei_sequia"], -1.5, where=(df_annual["indice_spei_sequia"] <= -1.5), color='#EF4444', alpha=0.35)
+
         ax2.set_ylabel("Índice SPEI", color='#E2E8F0', fontsize=10)
         ax2.set_title("Índice Estandarizado de Sequía (SPEI - CSIC)", color='white', fontsize=12, fontweight='bold')
         ax2.legend(loc="lower left", facecolor='#1E293B', edgecolor='#334155')
@@ -362,7 +366,8 @@ with tab1:
 with tab2:
     st.markdown("### 🗺️ Ranking y Comparativa entre Comunidades Autónomas")
     
-    df_region_summary = df_raw[(df_raw["anio"] >= year_range[0]) & (df_raw["anio"] <= year_range[1])].groupby("comunidad_autonoma").agg({
+    df_region_summary = df_raw[(df_raw["year"] >= year_range[0]) & (df_raw["year"] <= year_range[1])].groupby("comunidad_autonoma").agg({
+
         "anomalia_termica_c": "mean",
         "temperatura_media_c": "mean",
         "precipitacion_mm": "mean",

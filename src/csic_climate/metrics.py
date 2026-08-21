@@ -42,7 +42,8 @@ def calculate_decadal_trend(df: pd.DataFrame) -> pd.DataFrame:
     Agrupa los datos por década y calcula el promedio de anomalía térmica y sequía.
     """
     df_copy = df.copy()
-    df_copy["decada"] = (df_copy["anio"] // 10) * 10
+    df_copy["decada"] = (df_copy["year"] // 10) * 10
+
     
     summary = df_copy.groupby("decada").agg({
         "temperatura_media_c": "mean",

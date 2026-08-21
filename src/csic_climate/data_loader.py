@@ -34,7 +34,8 @@ def filter_by_region_and_years(
     """
     Filtra los datos climáticos por Comunidad Autónoma y rango de años.
     """
-    filtered = df[(df["anio"] >= start_year) & (df["anio"] <= end_year)].copy()
+    filtered = df[(df["year"] >= start_year) & (df["year"] <= end_year)].copy()
+
     if region and region != "Todas":
         filtered = filtered[filtered["comunidad_autonoma"] == region]
     return filtered
