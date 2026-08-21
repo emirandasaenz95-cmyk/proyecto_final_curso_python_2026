@@ -17,3 +17,6 @@ Thumbs.db
 # Configuración de IDEs locales
 .vscode/
 .idea/
+
+# Soluciones para el profesorado (ignoradas en Git)
+SOLUCIONES/

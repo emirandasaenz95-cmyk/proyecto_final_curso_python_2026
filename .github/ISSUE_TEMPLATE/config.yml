@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Preguntas y Discusiones del Curso CSIC
+    url: https://github.com/guslicem/proyecto_final_curso_python_2026/discussions
+    about: Realiza consultas didácticas o comparte tus resultados.

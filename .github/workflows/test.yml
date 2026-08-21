@@ -1,0 +1,43 @@
+name: Run Tests
+
+# Ejecuta la suite de pruebas en Pull Requests y en la rama main
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 23 * * Sun'
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.11", "3.12", "3.13"]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install hatch pytest pytest-cov
+        pip install -e .
+
+    - name: Run test suite with Pytest
+      run: pytest --cov=csic_climate --cov-report=xml --cov-report=term-missing
+
+    - name: Upload coverage to Codecov
+      if: runner.os == 'macOS' && matrix.python-version == '3.13'
+      uses: codecov/codecov-action@v4
+      with:
+        verbose: true
+        files: ./coverage.xml

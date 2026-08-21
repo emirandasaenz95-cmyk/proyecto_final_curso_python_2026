@@ -1,17 +1,38 @@
+################################################################################
+# Build Configuration (Hatchling)
+################################################################################
+
 [build-system]
-requires = ["hatchling"]
 build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+################################################################################
+# Project Configuration
+################################################################################
 
 [project]
 name = "csic-climatewatch"
 version = "0.1.0"
-description = "Cuadro de Mando de Cambio Climático y Sequía en España (IPE-CSIC / AEMET)"
+description = "Cuadro de Mando de Cambio Climático y Sequía en España (IPE-CSIC / ERA5)"
 readme = "README.md"
-authors = [
-    { name = "Gustavo Liñán Cembrano", email = "gustavo.linan@csic.es" }
-]
 license = { text = "MIT" }
-requires-python = ">=3.11"
+authors = [
+    { name = "Gustavo Liñán Cembrano", email = "gustavo.linan@csic.es" },
+    { name = "Alumnado del Curso Python Ciencia Abierta CSIC 2ª Edición" }
+]
+requires-python = ">= 3.11"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Atmospheric Science",
+]
+keywords = ["climate-change", "spei", "drought", "streamlit", "open-science", "csic", "era5"]
 
 dependencies = [
     "streamlit>=1.30.0",
@@ -21,12 +42,44 @@ dependencies = [
     "seaborn>=0.12.0",
 ]
 
-[project.optional-dependencies]
+[project.urls]
+Homepage = "https://github.com/guslicem/proyecto_final_curso_python_2026"
+"Source Code" = "https://github.com/guslicem/proyecto_final_curso_python_2026"
+"Bug Tracker" = "https://github.com/guslicem/proyecto_final_curso_python_2026/issues"
+Documentation = "https://github.com/guslicem/proyecto_final_curso_python_2026/blob/main/README.md"
+
+[dependency-groups]
 dev = [
-    "pytest>=7.0.0",
-    "copier>=9.0.0",
-    "hatch>=1.14.0",
+    "hatch",
+    "pre-commit",
 ]
+
+docs = [
+    "sphinx~=8.0",
+    "myst-parser>=4.0",
+    "pydata-sphinx-theme>=0.16",
+    "sphinx-autobuild>=2024.10.3",
+    "sphinx-autoapi>=3.6.0",
+    "sphinx-copybutton>=0.5.2",
+    "sphinx-design>=0.6.1",
+]
+
+build = [
+    "pip-audit",
+    "twine",
+]
+
+tests = [
+    "pytest",
+    "pytest-cov",
+]
+
+################################################################################
+# Tool Configuration
+################################################################################
+
+[tool.hatch.build]
+only-packages = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/csic_climate"]
@@ -34,3 +87,61 @@ packages = ["src/csic_climate"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+markers = ["raises"]
+
+[tool.coverage.paths]
+source = [
+    "src/csic_climate",
+    "*/site-packages/csic_climate",
+]
+
+[tool.coverage.run]
+branch = true
+parallel = true
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover"]
+precision = 2
+
+[tool.hatch.envs.default]
+installer = "uv"
+
+################################################################################
+# Hatch Environments for CI/CD & Automation
+################################################################################
+
+[tool.hatch.envs.build]
+description = "Verificar la construcción e instalación de la librería."
+dependency-groups = ["build"]
+builder = true
+
+[tool.hatch.envs.build.scripts]
+check = [
+    "hatch build {args:--clean}",
+    "twine check dist/*",
+]
+
+[tool.hatch.envs.test]
+description = "Ejecutar la suite de pruebas unitarias con Pytest y cobertura."
+dependency-groups = ["tests"]
+
+[[tool.hatch.envs.test.matrix]]
+python = ["3.11", "3.12", "3.13"]
+
+[tool.hatch.envs.test.scripts]
+run = "pytest {args:--cov=csic_climate --cov-report=term-missing --cov-report=xml}"
+
+[tool.hatch.envs.docs]
+description = "Generar y previsualizar la documentación Sphinx."
+dependency-groups = ["docs"]
+
+[tool.hatch.envs.docs.scripts]
+build = ["sphinx-build {args:-W -b html docs docs/_build}"]
+serve = ["sphinx-autobuild docs --watch src/csic_climate {args:-b html docs/_build/serve}"]
+
+[tool.hatch.envs.audit]
+description = "Auditar seguridad de las dependencias."
+dependency-groups = ["build"]
+
+[tool.hatch.envs.audit.scripts]
+check = ["pip-audit"]

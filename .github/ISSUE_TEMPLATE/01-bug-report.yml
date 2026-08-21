@@ -1,0 +1,37 @@
+name: 🐞 Bug report
+description: Reporta un error o problema en la aplicación o librería CSIC-ClimateWatch
+title: "[BUG] "
+labels: [bug, triage]
+body:
+  - type: checkboxes
+    attributes:
+      label: ¿Has buscado si ya existe una Issue reportando este mismo error?
+      description: Revisa las Issues abiertas antes de enviar un nuevo reporte.
+      options:
+      - label: He buscado y no existe una Issue similar.
+        required: true
+
+  - type: textarea
+    attributes:
+      label: Descripción del Problema
+      description: Explica brevemente qué estabas haciendo y qué fallo ha ocurrido.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Código de Muestra o Pasos para Reproducir
+      description: Proporciona los pasos exactos o el fragmento de código para reproducir el fallo.
+      value: |
+        ```python
+        # Código ejecutado
+        ```
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: Comportamiento Esperado vs Obtenido
+      description: Describe qué esperabas que ocurriera y qué ocurrió realmente.
+    validations:
+      required: false
