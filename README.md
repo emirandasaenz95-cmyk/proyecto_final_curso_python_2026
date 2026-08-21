@@ -1,41 +1,40 @@
 # 🌍 CSIC-ClimateWatch: Monitor de Cambio Climático y Sequía en España
 
-[![Python Version](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
+[![Python Version](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Streamlit](https://img.shields.io/badge/Streamlit-App-FF4B4B.svg)](https://streamlit.io/)
 [![pyOpenSci](https://img.shields.io/badge/pyOpenSci-Peer%20Reviewed-green.svg)](https://www.pyopensci.org/)
 
-**CSIC-ClimateWatch** es una aplicación interactiva y librería en Python desarrollada en el marco del curso *Python para Ciencia Abierta (CSIC)*. Permite visualizar, analizar y auditar series temporales climáticas (1961 - 2024) derivadas de los estudios del **Instituto Pirenaico de Ecología (IPE-CSIC)** y **AEMET**.
+**CSIC-ClimateWatch** es una aplicación interactiva y librería en Python desarrollada en el marco del curso *Python para Ciencia Abierta (CSIC)*. Permite visualizar y analizar series temporales de cambio climático y sequía (1961 - 2024) para las 17 Comunidades Autónomas de España.
 
 ---
 
 ## 🚀 Características Principales
 
 - **Filtro Dinámico:** Selección por Comunidad Autónoma y rango histórico de años (1961 - 2024).
-- **Índice SPEI de Sequía:** Cálculo e identificación de meses de sequía severa según la norma del CSIC (SPEI < -1.5).
-- **Anomalías Térmicas y Olas de Calor:** Análisis de tendencia de calentamiento regional frente a la línea base climática 1961-1990.
-- **Interfaz Streamlit:** Cuadro de mando interactivo con gráficos integrados de Matplotlib y Seaborn.
+- **Índice SPEI de Sequía:** Cálculo e identificación de meses de sequía severa según la metodología desarrollada por el **Instituto Pirenaico de Ecología (IPE-CSIC)** (SPEI < -1.5).
+- **Anomalías Térmicas y Olas de Calor:** Análisis de tendencia de calentamiento regional frente al periodo climático de referencia (1961 - 1990).
+- **Interfaz Streamlit:** Cuadro de mando interactivo en Modo Oscuro con gráficos de Matplotlib y Seaborn.
 
 ---
 
-## 📊 Fuente de Datos y Metodología (Open Science)
+## 📊 Fuente de Datos y Metodología (Transparencia Open Science)
 
-El dataset alojado en `data/csic_climate_spain.csv` contiene **observaciones climáticas reales y reanalizadas** para las 17 Comunidades Autónomas de España:
+El dataset alojado en `data/csic_climate_spain.csv` combina series meteorológicas observadas/reanalizadas con la metodología científica del CSIC:
 
-- **Fuentes Oficiales de Origen:**
-  - **IPE-CSIC / SPEIbase:** Instituto Pirenaico de Ecología (CSIC) – Base de datos global e híbridada de sequía ([https://spei.csic.es/](https://spei.csic.es/)).
-  - **AEMET / OpenData:** Agencia Estatal de Meteorología – Registro observacional histórico ([https://opendata.aemet.es/](https://opendata.aemet.es/)).
-  - **ERA5 Reanalysis:** Servicio de Cambio Climático de Copernicus (C3S / ECMWF) accesible vía Open-Meteo Archive API.
-  - **Depósito Digital.CSIC:** Conjuntos de datos vinculados al DOI institucional [`10.20350/digitalCSIC/8997`](https://doi.org/10.20350/digitalCSIC/8997).
+- **Origen de los Datos Meteorológicos:**
+  - **ERA5 Reanalysis (Copernicus / ECMWF):** Las series temporales de temperatura y precipitación mensual (1961 - 2024) se obtuvieron a partir del modelo de reanálisis ERA5 del Servicio de Cambio Climático de Copernicus / ECMWF (vía API REST de Open-Meteo).
+- **Metodología de Sequía:**
+  - **Algoritmo SPEI (IPE-CSIC):** El *Standardised Precipitation-Evapotranspiration Index* (SPEI) se calcula aplicando la formulación del Instituto Pirenaico de Ecología (IPE-CSIC) (Vicente-Serrano et al., *Journal of Climate*).
 
 - **Variables del Dataset (`csic_climate_spain.csv`):**
   - `fecha`: Fecha de inicio del registro mensual (`AAAA-MM-01`).
   - `anio` / `mes`: Año y mes de la observación.
-  - `comunidad_autonoma`: Comunidad Autónoma de referencia en España.
+  - `comunidad_autonoma`: Comunidad Autónoma de referencia en España (17 CC.AA.).
   - `temperatura_media_c`: Temperatura media observada (°C).
-  - `anomalia_termica_c`: Desviación en grados frente al periodo climático de referencia (1961-1990).
+  - `anomalia_termica_c`: Desviación en grados frente a la línea base 1961-1990.
   - `precipitacion_mm`: Precipitaciones mensuales acumuladas en milímetros.
-  - `indice_spei_sequia`: *Standardised Precipitation-Evapotranspiration Index* (SPEI). Valores < -1.5 indican sequía severa.
+  - `indice_spei_sequia`: Índice SPEI del CSIC. Valores < -1.5 indican sequía severa.
   - `dias_ola_calor`: Conteo de días en el mes con temperaturas máximas superiores a 32 °C.
 
 ---
@@ -44,7 +43,7 @@ El dataset alojado en `data/csic_climate_spain.csv` contiene **observaciones cli
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/<tu_usuario>/CSIC-ClimateWatch.git
+git clone https://github.com/guslicem/CSIC-ClimateWatch.git
 cd CSIC-ClimateWatch
 
 # 2. Crear y activar el entorno virtual

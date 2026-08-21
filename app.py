@@ -213,7 +213,8 @@ year_range = st.sidebar.slider(
 st.sidebar.markdown("---")
 st.sidebar.markdown(f"**📊 Registros Activos:** {len(df_raw):,} meses")
 st.sidebar.markdown(f"**🏛️ Comunidades Autónomas:** {len(regiones_disponibles)}")
-st.sidebar.caption("Fuente: ERA5 Reanalysis / IPE-CSIC (DOI: 10.20350/digitalCSIC/8997)")
+st.sidebar.caption("Datos: ERA5 Reanalysis (Copernicus/ECMWF) • Metodología SPEI: IPE-CSIC")
+
 
 # Filtrado de Datos
 df_filtered = filter_by_region_and_years(
