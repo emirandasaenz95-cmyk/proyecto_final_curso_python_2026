@@ -1,11 +1,20 @@
 import os
+import sys
+
+# Asegurar que el directorio 'src' esté en el sys.path para importaciones estándar del paquete
+src_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "src"))
+if src_path not in sys.path:
+    sys.path.insert(0, src_path)
+
 import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from src.csic_climate.data_loader import load_climate_data, filter_by_region_and_years
-from src.csic_climate.metrics import calculate_climate_summary, calculate_decadal_trend
+
+from csic_climate.data_loader import load_climate_data, filter_by_region_and_years
+from csic_climate.metrics import calculate_climate_summary, calculate_decadal_trend
+
 
 # ==============================================================================
 # CONFIGURACIÓN DE PÁGINA Y TEMA OSCURO
