@@ -25,19 +25,12 @@ El dataset alojado en `data/csic_climate_spain.csv` combina series meteorológic
 - **Origen de los Datos Meteorológicos:**
   - **ERA5 Reanalysis (Copernicus / ECMWF):** Las series temporales de temperatura y precipitación mensual (1961 - 2024) se obtuvieron a partir del modelo de reanálisis ERA5 del Servicio de Cambio Climático de Copernicus / ECMWF (vía API REST de Open-Meteo).
 - **Metodología de Sequía:**
-  - **Algoritmo SPEI (IPE-CSIC):** El *Standardised Precipitation-Evapotranspiration Index* (SPEI) se calcula aplicando la formulación del Instituto Pirenaico de Ecología (IPE-CSIC) (Vicente-Serrano et al., [Digital.CSIC Handle: 10261/22405](https://digital.csic.es/handle/10261/22405)).
+  - **Algoritmo SPEI (IPE-CSIC):** El *Standardised Precipitation-Evapotranspiration Index* (SPEI) se calcula aplicando la formulación del Instituto Pirenaico de Ecología (IPE-CSIC) (Vicente-Serrano et al., [Digital.CSIC Handle: 10261/22405](https://digital.csic.es/handle/10261/XXXXXXXXX)).
 
 
 
 - **Variables del Dataset (`csic_climate_spain.csv`):**
-  - `fecha`: Fecha de inicio del registro mensual (`AAAA-MM-01`).
-  - `anio` / `mes`: Año y mes de la observación.
-  - `comunidad_autonoma`: Comunidad Autónoma de referencia en España (17 CC.AA.).
-  - `temperatura_media_c`: Temperatura media observada (°C).
-  - `anomalia_termica_c`: Desviación en grados frente a la línea base 1961-1990.
-  - `precipitacion_mm`: Precipitaciones mensuales acumuladas en milímetros.
-  - `indice_spei_sequia`: Índice SPEI del CSIC. Valores < -1.5 indican sequía severa.
-  - `dias_ola_calor`: Conteo de días en el mes con temperaturas máximas superiores a 32 °C.
+  A completar por el equipo doc.
 
 ---
 
@@ -45,7 +38,7 @@ El dataset alojado en `data/csic_climate_spain.csv` combina series meteorológic
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/guslicem/CSIC-ClimateWatch.git
+git clone https://github.com/guslicem/XUUXYXYX.git
 cd CSIC-ClimateWatch
 
 # 2. Crear y activar el entorno virtual
@@ -79,10 +72,10 @@ Este proyecto está bajo la Licencia MIT. Para citar el uso de los datos o el pa
 
 ```bibtex
 @software{csic_climatewatch_2026,
-  author       = {Liñán Cembrano, Gustavo y Alumnado del Curso Python para la Ciencia Abierta 2ª Edición},
-  title        = {CSIC-ClimateWatch: Cuadro de Mando de Cambio Climático y Sequía en España},
-  year         = {2026},
+  author       = {XXXXXXXXX},
+  title        = {CSIC-ClimateWatch: Dashboard de Cambio Climático y Sequía en España},
+  year         = {YYYYY},
   publisher    = {Digital.CSIC / GitHub},
-  url          = {https://github.com/guslicem/CSIC-ClimateWatch}
+  url          = {https://github.com/guslicem/XUXUXYXYXYXYX}
 }
 ```
