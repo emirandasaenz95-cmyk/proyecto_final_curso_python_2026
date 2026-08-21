@@ -467,7 +467,8 @@ with tab5:
             <h4>🔬 Metodología de Indicadores</h4>
             <ul>
                 <li><strong>Anomalía Térmica (°C):</strong> Desviación de la temperatura media mensual observada respecto al promedio de la línea base 1961-1990.</li>
-                <li><strong>Índice SPEI de Sequía:</strong> Formulación del <em>Standardised Precipitation-Evapotranspiration Index</em> desarrollada por investigadores del <strong>Instituto Pirenaico de Ecología (IPE-CSIC)</strong> (<a href="https://hdl.handle.net/10261/280145" target="_blank" style="color: #60A5FA; text-decoration: underline;">Vicente-Serrano et al., Digital.CSIC Handle: 10261/280145</a>). Un valor de SPEI &le; -1.5 define sequía severa/extrema.</li>
+                <li><strong>Índice SPEI de Sequía:</strong> Formulación del <em>Standardised Precipitation-Evapotranspiration Index</em> desarrollada por investigadores del <strong>Instituto Pirenaico de Ecología (IPE-CSIC)</strong> (<a href="https://digital.csic.es/handle/10261/10002" target="_blank" style="color: #60A5FA; text-decoration: underline;">Vicente-Serrano et al., Digital.CSIC Handle: 10261/10002</a>). Un valor de SPEI &le; -1.5 define sequía severa/extrema.</li>
+
 
                 <li><strong>Olas de Calor:</strong> Conteo acumulado de días al mes con temperaturas máximas observadas &gt; 32 °C.</li>
             </ul>
