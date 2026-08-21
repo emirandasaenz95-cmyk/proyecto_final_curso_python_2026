@@ -27,4 +27,4 @@ print(summary)
 
 ## 📜 Principios FAIR y Ciencia Abierta
 
-El proyecto se distribuye bajo la Licencia MIT e incluye metadatos de citación en formato `CITATION.cff` e inyección de Handle de Digital.CSIC (`10261/22405`).
+El proyecto se distribuye bajo la Licencia MIT e incluye metadatos de citación en formato `CITATION.cff` e inyección de Handle de Digital.CSIC (`10261/XXXIXXIXIXI`).
