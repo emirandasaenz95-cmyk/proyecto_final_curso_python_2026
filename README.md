@@ -25,7 +25,8 @@ El dataset alojado en `data/csic_climate_spain.csv` combina series meteorológic
 - **Origen de los Datos Meteorológicos:**
   - **ERA5 Reanalysis (Copernicus / ECMWF):** Las series temporales de temperatura y precipitación mensual (1961 - 2024) se obtuvieron a partir del modelo de reanálisis ERA5 del Servicio de Cambio Climático de Copernicus / ECMWF (vía API REST de Open-Meteo).
 - **Metodología de Sequía:**
-  - **Algoritmo SPEI (IPE-CSIC):** El *Standardised Precipitation-Evapotranspiration Index* (SPEI) se calcula aplicando la formulación del Instituto Pirenaico de Ecología (IPE-CSIC) (Vicente-Serrano et al., [Digital.CSIC Handle: 10261/10002](https://digital.csic.es/handle/10261/10002)).
+  - **Algoritmo SPEI (IPE-CSIC):** El *Standardised Precipitation-Evapotranspiration Index* (SPEI) se calcula aplicando la formulación del Instituto Pirenaico de Ecología (IPE-CSIC) (Vicente-Serrano et al., [Digital.CSIC Handle: 10261/22405](https://digital.csic.es/handle/10261/22405)).
+
 
 
 - **Variables del Dataset (`csic_climate_spain.csv`):**
