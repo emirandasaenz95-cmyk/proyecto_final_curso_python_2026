@@ -25,7 +25,7 @@ El dataset alojado en `data/csic_climate_spain.csv` combina series meteorológic
 - **Origen de los Datos Meteorológicos:**
   - **ERA5 Reanalysis (Copernicus / ECMWF):** Las series temporales de temperatura y precipitación mensual (1961 - 2024) se obtuvieron a partir del modelo de reanálisis ERA5 del Servicio de Cambio Climático de Copernicus / ECMWF (vía API REST de Open-Meteo).
 - **Metodología de Sequía:**
-  - **Algoritmo SPEI (IPE-CSIC):** El *Standardised Precipitation-Evapotranspiration Index* (SPEI) se calcula aplicando la formulación del Instituto Pirenaico de Ecología (IPE-CSIC) (Vicente-Serrano et al., [Digital.CSIC Handle: 10261/22405](https://digital.csic.es/handle/10261/XXXXXXXXX)).  
+  - **Algoritmo SPEI (IPE-CSIC):** El *Standardised Precipitation-Evapotranspiration Index* (SPEI) se calcula aplicando la formulación del Instituto Pirenaico de Ecología (IPE-CSIC) (Vicente-Serrano et al., [Digital.CSIC Handle: 10261/22405](https://digital.csic.es/handle/10261/22405)).  
   > 📌 *[TAREA EQUIPO 3 (DOCUMENTACIÓN)]: Verificar y actualizar el enlace permanente de Digital.CSIC sustituyendo `XXXXXXXXX` por lo que corresponda.*
 
 - **Variables del Dataset (`csic_climate_spain.csv`):**
@@ -38,11 +38,11 @@ El dataset alojado en `data/csic_climate_spain.csv` combina series meteorológic
   | `year` | Int | Año de la observación (1961 - 2024) |
   | `mes` | Int | Mes del año (1 - 12) |
   | `comunidad_autonoma` | String | Nombre oficial de la CC.AA. en España |
-  | `temperatura_media_c` | Float | *[A completar por Equipo 3]* |
-  | `anomalia_termica_c` | Float | *[A completar por Equipo 3]* |
-  | `precipitacion_mm` | Float | *[A completar por Equipo 3]* |
-  | `indice_spei_sequia` | Float | *[A completar por Equipo 3]* |
-  | `dias_ola_calor` | Int | *[A completar por Equipo 3]* |
+  | `temperatura_media_c` | Float | Temperatura media mensual observada/reanalizada (°C) |
+  | `anomalia_termica_c` | Float | Desviación térmica respecto al periodo de referencia 1961-1990 (°C) |
+  | `precipitacion_mm` | Float | Precipitación total mensual acumulada (mm) |
+  | `indice_spei_sequia` | Float | Índice SPEI de sequía (adimensional; valores < -1.5 indican sequía severa/extrema) |
+  | `dias_ola_calor` | Int | Número de días en el mes bajo condición de ola de calor regional (días) |
 
 ---
 
@@ -50,14 +50,23 @@ El dataset alojado en `data/csic_climate_spain.csv` combina series meteorológic
 
 ```bash
 # 1. Clonar el repositorio del proyecto
-git clone https://github.com/guslicem/XUUXYXYX.git
-# 📌 [TAREA EQUIPO 3]: Reemplazar XUUXYXYX.git por el nombre real del repositorio (proyecto_final_curso_python_2026.git)
+git clone https://github.com/guslicem/proyecto_final_curso_python_2026.git
 
 cd proyecto_final_curso_python_2026
 
-# 2. Crear y activar el entorno virtual
-python3 -m venv venv
+# 2. Crear y activar el entorno virtual para MAC
+python -m venv venv
 source venv/bin/activate
+
+#3 Crear y activar entorno virtual para windows
+
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Activar el entorno virtual en Windows (PowerShell):
+
+.\venv\Scripts\Activate.ps1
+
 
 # 3. Instalar las dependencias en modo editable
 pip install -r requirements.txt
@@ -88,11 +97,11 @@ Este proyecto está bajo la Licencia MIT. Para citar el uso de los datos o el pa
 
 ```bibtex
 @software{csic_climatewatch_2026,
-  author       = {XXXXXXXXX},
+  author       = {Gustavo Liñán Cembrano},
   title        = {CSIC-ClimateWatch: Dashboard de Cambio Climático y Sequía en España},
-  year         = {YYYYY},
+  year         = {2026},
   publisher    = {Digital.CSIC / GitHub},
-  url          = {https://github.com/guslicem/XUXUXYXYXYXYX}
+  url          = {https://github.com/guslicem/proyecto_final_curso_python_2026}
 }
 ```
 
