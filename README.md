@@ -87,13 +87,39 @@ El proyecto está diseñado para el trabajo colaborativo en 4 grupos de investig
 - **`README.md`**, **`CITATION.cff`** y **`CHANGELOG.md`**: Documentación FAIR y Ciencia Abierta (**Grupo 3**).
 - **`tests/` & `.github/workflows/ci.yml`**: Pruebas unitarias `pytest` y CI/CD (**Grupo 4**).
 
+### 🔄 Cómo acceder y colaborar en la rama de otro equipo
+
+1. **Subir tus cambios (Push):**
+   ```bash
+   git push -u origin feature/<nombre-rama>
+   ```
+
+2. **Acceder a la rama de un compañero (Repositorio compartido):**
+   ```bash
+   # Descargar las ramas remotas actualizadas
+   git fetch origin
+   # Cambiar a la rama del compañero
+   git switch feature/<nombre-rama>   # o git checkout feature/<nombre-rama>
+   ```
+
+3. **Acceder desde un Fork independiente:**
+   ```bash
+   # 1. Vincular el repositorio del compañero
+   git remote add companero https://github.com/<usuario_companero>/proyecto_final_curso_python_2026.git
+   # 2. Descargar sus ramas
+   git fetch companero
+   # 3. Crear una copia local para revisar
+   git checkout -b review-rama companero/feature/<nombre-rama>
+   ```
+
+4. **Revisión por Pares (Peer Review) en GitHub:**
+   - Acceder a la pestaña **Pull Requests** en GitHub para revisar los cambios en la pestaña **Files changed**, comentar líneas específicas y aprobar la integración (*Approve* / *Merge*).
+
 ---
 
 ## 📜 Licencia y Citación
 
-Este proyecto está bajo la Licencia MIT. Para citar el uso de los datos o el paquete:
-
-> 📌 *[TAREA EQUIPO 3 (DOCUMENTACIÓN)]: Completar los autores, el año de publicación y la URL del repositorio tanto en el bloque BibTeX inferior como en el archivo `CITATION.cff`.*
+Este proyecto está bajo la Licencia MIT. Para citar el software o los datos en publicaciones científicas, utiliza el archivo [CITATION.cff](CITATION.cff) o el siguiente bloque BibTeX:
 
 ```bibtex
 @software{csic_climatewatch_2026,
@@ -109,4 +135,38 @@ Este proyecto está bajo la Licencia MIT. Para citar el uso de los datos o el pa
 
 ## 📝 Historial de Cambios (`CHANGELOG.md`)
 
-> 📌 *[TAREA EQUIPO 3 (DOCUMENTACIÓN)]: Actualizar el archivo `CHANGELOG.md` al recibir las Pull Requests de los Equipos 1 (Backend), 2 (Frontend) y 4 (Testing).*
+Consulta el archivo [CHANGELOG.md](CHANGELOG.md) para ver el registro detallado de versiones, nuevas funcionalidades y contribuciones de cada equipo siguiendo el estándar *Keep a Changelog*.
+
+---
+
+## 🤝 Autores y Colaboradores
+
+Desarrollado de forma colaborativa por el alumnado y profesorado del curso *Python para Ciencia Abierta (CSIC)* (Octubre 2026):
+
+- **Profesor / Coordinador:** Gustavo Liñán Cembrano
+
+### 👥 Equipos de Trabajo y Colaboradores:
+
+#### 🧮 Grupo 1: Backend & Ciencia de Datos
+- Pablo Álvarez González
+- Teresa Bravo María
+- María Martínez Ortiz
+- Carlos Rubiales Ordóñez
+
+#### 🎨 Grupo 2: Frontend & Streamlit
+- Sandra Bargiela Cuevas
+- Isabel Boyano Guerra
+- José Manuel Planes Torrano
+- José Luis Velázquez Molinero
+
+#### 📖 Grupo 3: Documentación & Ciencia Abierta
+- Antonio José Gómez Morte
+- Guillermo Madrigal Casanueva
+- Edgard Alejandro Miranda Sáenz
+
+#### 🧪 Grupo 4: Testing & Calidad de Software
+- Sara Expósito Reguero
+- Irene González Manzano
+- Mario Hernández Villada
+- Jaime Martel Martín
+
